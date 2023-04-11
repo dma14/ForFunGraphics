@@ -1,0 +1,68 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="MainWindow.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Object.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Utils.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="BaseWindow.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="MainWindow.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Object.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include=".clang-format" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="Cooper.obj">
+      <Filter>ObjectFiles</Filter>
+    </Text>
+    <Text Include="Cube.obj">
+      <Filter>ObjectFiles</Filter>
+    </Text>
+    <Text Include="Skyscraper.obj">
+      <Filter>ObjectFiles</Filter>
+    </Text>
+    <Text Include="PowerLines.obj">
+      <Filter>ObjectFiles</Filter>
+    </Text>
+    <Text Include="Teapot.obj">
+      <Filter>ObjectFiles</Filter>
+    </Text>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="ObjectFiles">
+      <UniqueIdentifier>{5b97eee7-d8ab-4fee-9761-c6067cdff3fa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source">
+      <UniqueIdentifier>{2bc1a52c-92e7-41e8-a259-d8b6300cbf32}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header">
+      <UniqueIdentifier>{7e5737cf-5356-4a3b-b06d-0179c2e5279b}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>
