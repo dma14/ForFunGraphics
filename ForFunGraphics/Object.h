@@ -11,23 +11,22 @@
 using std::vector;
 using std::string;
 
-typedef struct {
-    unsigned VId[3];
-} Face;
+typedef vector<unsigned> Face;
 
 class Object {
 public:
     Object(string FilePath = "");
     void AddVertex(Coord V) { Vertices.push_back(V); };
-    void AddFace(unsigned VId1, unsigned VId2, unsigned VId3) {
-        Faces.push_back({ VId1, VId2, VId3 });
+    Face& AddFace() {
+        Faces.push_back(Face());
+        return Faces.back();
     };
     vector<Coord>& GetVertices() { return Vertices; };
     vector<Face>& GetFaces() { return Faces; };
     vector<Coord> GetVerticesForFace(Face& F) {
-        vector<Coord> FaceVertices;
-        for (unsigned Idx = 0; Idx < 3; Idx++)
-            FaceVertices.push_back(Vertices.at(F.VId[Idx] - 1));
+        vector<Coord> FaceVertices(F.size());
+        for (unsigned Idx = 0; Idx < F.size(); Idx++)
+            FaceVertices[Idx] = Vertices.at(F[Idx] - 1);
         return FaceVertices;
     };
 

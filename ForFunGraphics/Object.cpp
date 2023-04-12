@@ -27,18 +27,16 @@ Object::Object(string FilePath){
                 W = 1.0;
             AddVertex({ X, Y, Z, W });
         } else if (Type == "f") {
-            string Values[3];
-            InSS >> Values[0] >> Values[1] >> Values[2];
-            unsigned VId[3];
-            for (unsigned Idx = 0; Idx < 3; Idx++)
-                VId[Idx] = stoi(Values[Idx].substr(0, Values[Idx].find("/")));
-
-            // We should check that the Vertices given actually exist
-            for (unsigned Idx = 0; Idx < 3; Idx++)
-                if (VId[Idx] > Vertices.size())
-                    std::cout << "Error: couldn't parse face due to illegal verted id: "
-                              << VId[Idx] << std::endl;
-            AddFace(VId[0], VId[1], VId[2]);
+            string Value;
+            Face& NewFace = AddFace();
+            while (!InSS.eof()) {
+                InSS >> Value;
+                unsigned VIdx = stoi(Value.substr(0, Value.find("/")));
+                if (VIdx > Vertices.size())
+                    std::cout << "Error: couldn't parse face due to illegal vertex id: " << VIdx
+                              << std::endl;
+                NewFace.push_back(VIdx);
+            }
         } else {
             std::cout << "Error: couldn't parse .obj file due to unrecognized starter (" << Type
                       << ")" << std::endl;
