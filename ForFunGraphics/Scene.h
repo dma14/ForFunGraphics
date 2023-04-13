@@ -16,22 +16,26 @@ using std::get;
 class Scene {
 public:
     Scene() {
+        SetPoVLocation({ 0., 0., 0., 1. });
+        SetPoVAngles({ 0., 0., 0. });
+        SetFoV(90.);
+
         // TODO: performance for this huge obj is so bad lol
         //Object* Cooper = AddObject("Cooper.obj");
         Object* Skyscraper = AddObject("Skyscraper.obj");
         Skyscraper->SetDisplacement({ 0.f, 0.f, -100.f, 0.f });
+        Skyscraper->SetColor(D2D1::ColorF::AntiqueWhite);
         Object* Teapot = AddObject("Teapot.obj");
-        Teapot->SetDisplacement({0.f, 0.f, -10.f, 0.f});
+        Teapot->SetDisplacement({ 0.f, 0.f, -10.f, 0.f });
+        Teapot->SetColor(D2D1::ColorF::Violet);
         Teapot->AddTimeRotation({ 0.f, -0.0000005f, 0.f, 0.f });
-        SetPoVLocation({ 0., 0., 0., 1. });
-        SetPoVAngles({ 0., 0., 0. });
-        SetFoV(90.);
 
         for (int Row = 0; Row < 2; Row++) {
             for (int Col = 0; Col < 12; Col++) {
                 Object* Cube = AddObject("Cube.obj");
                 Cube->SetDisplacement(
                     { (float)((Row * 2 - 1) * 5), 0.f, (float)-2 * Col, 0.f });
+                Cube->SetColor(D2D1::ColorF::LawnGreen);
                 Cube->AddTimeRotation({0.f, 0.000001f, 0.f, 0.f});
             }
         }

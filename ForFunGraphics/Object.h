@@ -15,7 +15,7 @@ typedef vector<unsigned> Face;
 
 class Object {
 public:
-    Object(string FilePath = "");
+    Object(string FilePath = "", D2D1::ColorF LineColor = D2D1::ColorF::White);
     void AddVertex(Coord V) { Vertices.push_back(V); };
     Face& AddFace() {
         Faces.push_back(Face());
@@ -29,6 +29,8 @@ public:
             FaceVertices[Idx] = Vertices.at(F[Idx] - 1);
         return FaceVertices;
     };
+    void SetColor(D2D1::ColorF C) { Color = C; }
+    D2D1::ColorF GetColor() { return Color; }
 
     // Rotation applied before displacement, so user needs to manaully add the Displacement
     // vector, while rotation is applied automatically.
@@ -74,4 +76,5 @@ private:
     Coord RotationSpeeds = { 0. };
     Mat4x4 RotationMat = { 0. };
     bool MovesInTime = false;
+    D2D1::ColorF Color = D2D1::ColorF::White;
 };

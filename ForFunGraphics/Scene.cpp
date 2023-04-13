@@ -15,7 +15,9 @@ void Scene::Render(ID2D1HwndRenderTarget* RenderTarget, ID2D1SolidColorBrush *Br
     D2D1_POINT_2F WindowMin = { 0., 0. };
     D2D1_POINT_2F WindowMax = { WindowSize.width, WindowSize.height };
     for (Object& Obj : Objects) {
+        Brush->SetColor(Obj.GetColor());
         Coord Displacement = Obj.GetDisplacement();
+
         Coord PrevVertex, Vertex = { 0 };
         D2D1_POINT_2F PrevVertex2D, Vertex2D = { 0 };
         bool PrevSkipVertex, SkipVertex = false;

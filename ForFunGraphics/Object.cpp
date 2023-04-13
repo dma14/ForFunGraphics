@@ -1,7 +1,8 @@
 #include "Object.h"
 
-Object::Object(string FilePath){
+Object::Object(string FilePath, D2D1::ColorF LineColor) {
     // If no file specified, init an empty object.
+    SetColor(LineColor);
     if (FilePath == "")
         return;
 
