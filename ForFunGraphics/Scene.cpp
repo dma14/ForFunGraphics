@@ -33,6 +33,7 @@ void Scene::Render(ID2D1HwndRenderTarget* RenderTarget, ID2D1SolidColorBrush *Br
                 PrevSkipVertex = SkipVertex;
 
                 Vertex = Vertices.at(Idx % Vertices.size());
+                SkipVertex = false;
                 Coord VertexRelative, VertexRotated, VertexFovCone;
                 // Translate the object to match with the camera location, as well as any
                 // inherent translation.
@@ -43,12 +44,6 @@ void Scene::Render(ID2D1HwndRenderTarget* RenderTarget, ID2D1SolidColorBrush *Br
                 // Rotate the object to match the FoV angle (need to rotate the opposite way).
                 ProjectCoord(RotateMatReverse, VertexRelative, VertexRotated);
 
-                // Check if the vertex is between the (real) Z planes we wish to draw
-                if (VertexRotated.Z > ZNear || VertexRotated.Z < ZFar) {
-                    SkipVertex = true;
-                    continue;
-                }
-                
                 // Project the coordinate from real space into FoV cone
                 VertexRotated.W = 1.f;
                 ProjectCoord(ToFovMat, VertexRotated, VertexFovCone);
@@ -62,11 +57,12 @@ void Scene::Render(ID2D1HwndRenderTarget* RenderTarget, ID2D1SolidColorBrush *Br
                     VertexFovCone.Z /= VertexFovCone.W;
                 }
 
+                // Check if the vertex is between the (real) Z planes we wish to draw
                 // Check if the vertex is within the FoV, if not we shouldn't draw it...
-                if (VertexFovCone.X < -1.f || VertexFovCone.X > 1.f ||
+                if (VertexRotated.Z > ZNear || VertexRotated.Z < ZFar ||
+                    VertexFovCone.X < -1.f || VertexFovCone.X > 1.f ||
                     VertexFovCone.Y < -1.f || VertexFovCone.Y > 1.f) {
                     SkipVertex = true;
-                    continue;
                 }
 
                 // Now convert the FoV cone into screen coordinates
@@ -80,7 +76,7 @@ void Scene::Render(ID2D1HwndRenderTarget* RenderTarget, ID2D1SolidColorBrush *Br
                 Vertex2D.y = WindowSize.height - Vertex2D.y;
 
                 // Draw a line between the vertices, just not for the first iteration.
-                if (Idx != 0 && !PrevSkipVertex && !SkipVertex) {
+                if (Idx != 0 && (!PrevSkipVertex || !SkipVertex)) {
                     RenderTarget->DrawLine(
                         PrevVertex2D, Vertex2D, Brush, StrokeWidth);
                 }
