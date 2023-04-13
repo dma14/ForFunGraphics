@@ -8,10 +8,10 @@ void Scene::Render(ID2D1HwndRenderTarget* RenderTarget, ID2D1SolidColorBrush *Br
     float AspectRatio = WindowSize.width / WindowSize.height;
     float StrokeWidth = 2.;
 
-    // The FoV "cone" is built so that the FoV captures pbjects between -1 and 1 in both x and
-    // y. We'll need to convert these to screen coordinates after.
-    D2D1_POINT_2F SpaceMin = { -1., -1. };
-    D2D1_POINT_2F SpaceMax = { 1., 1. };
+    // The FoV "cone" is built so that the FoV captures objects between -1 and 1 in y and
+    // accordingly in x. We'll need to convert these to screen coordinates after.
+    D2D1_POINT_2F SpaceMin = { -1. * AspectRatio, -1. };
+    D2D1_POINT_2F SpaceMax = { 1. * AspectRatio, 1. };
     D2D1_POINT_2F WindowMin = { 0., 0. };
     D2D1_POINT_2F WindowMax = { WindowSize.width, WindowSize.height };
     for (Object& Obj : Objects) {
@@ -47,8 +47,6 @@ void Scene::Render(ID2D1HwndRenderTarget* RenderTarget, ID2D1SolidColorBrush *Br
                 // Project the coordinate from real space into FoV cone
                 VertexRotated.W = 1.f;
                 ProjectCoord(ToFovMat, VertexRotated, VertexFovCone);
-                // Need an extra aspect ratio adjustment for the X coord
-                VertexFovCone.X *= AspectRatio;
                 // Need to finish by dividing by original Z coord (which is now stored in W of
                 // the new vector)
                 if (VertexFovCone.W != 0.0) {
@@ -60,8 +58,8 @@ void Scene::Render(ID2D1HwndRenderTarget* RenderTarget, ID2D1SolidColorBrush *Br
                 // Check if the vertex is between the (real) Z planes we wish to draw
                 // Check if the vertex is within the FoV, if not we shouldn't draw it...
                 if (VertexRotated.Z > ZNear || VertexRotated.Z < ZFar ||
-                    VertexFovCone.X < -1.f || VertexFovCone.X > 1.f ||
-                    VertexFovCone.Y < -1.f || VertexFovCone.Y > 1.f) {
+                    VertexFovCone.X < SpaceMin.x || VertexFovCone.X > SpaceMax.x ||
+                    VertexFovCone.Y < SpaceMin.y || VertexFovCone.Y > SpaceMax.y) {
                     SkipVertex = true;
                 }
 
