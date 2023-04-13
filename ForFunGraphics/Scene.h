@@ -16,7 +16,7 @@ using std::get;
 class Scene {
 public:
     Scene() {
-        SetPoVLocation({ 0., 0., 0., 1. });
+        SetPoVLocation({ 0., 0., 10., 1. });
         SetPoVAngles({ 0., 0., 0. });
         SetFoV(90.);
 
@@ -29,14 +29,18 @@ public:
         Teapot->SetDisplacement({ 0.f, 0.f, -10.f, 0.f });
         Teapot->SetColor(D2D1::ColorF::Violet);
         Teapot->AddTimeRotation({ 0.f, -0.0000005f, 0.f, 0.f });
+        Object* Top = AddObject("Cube.obj");
+        Top->SetDisplacement({ 0.f, 42.f, -100.f, 0.f });
+        Top->SetColor(D2D1::ColorF::LawnGreen);
+        Top->AddTimeRotation({ 0.f, 0.000001f, 0.000001f, 0.f });
 
         for (int Row = 0; Row < 2; Row++) {
-            for (int Col = 0; Col < 12; Col++) {
+            for (int Col = 0; Col < 40; Col++) {
                 Object* Cube = AddObject("Cube.obj");
                 Cube->SetDisplacement(
-                    { (float)((Row * 2 - 1) * 5), 0.f, (float)-2 * Col, 0.f });
+                    { (float)((Row * 2 - 1) * 20), -5.f, (float)-2 * Col, 0.f });
                 Cube->SetColor(D2D1::ColorF::LawnGreen);
-                Cube->AddTimeRotation({0.f, 0.000001f, 0.f, 0.f});
+                Cube->AddTimeRotation({0.0000005f, 0.000001f, 0.f, 0.f});
             }
         }
     }
