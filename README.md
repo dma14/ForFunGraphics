@@ -5,6 +5,7 @@ projects them to a first-person perspective, and displays them using Direct2D to
 Also allows for object translation/rotation, and moving the PoV in real-time.
 
 Current progress demo (click for video):
+
 [![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/7DC83wx4E7U/0.jpg)](https://www.youtube.com/watch?v=7DC83wx4E7U)
 
 
